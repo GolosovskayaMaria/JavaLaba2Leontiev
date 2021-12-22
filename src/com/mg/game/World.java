@@ -9,19 +9,19 @@ public class World {
     World() {
         entities = new LinkedList<Entity>();
         EntityMonster amoeba = new EntityMonster();
-        amoeba.title = "Amoeba";
+        amoeba.set_title("Amoeba");
         entities.add(amoeba);
         EntityMonster telepuzik = new EntityMonster();
-        telepuzik.title = "Telepuzik";
+        telepuzik.set_title("Telepuzik");
         entities.add(telepuzik);
         EntityGuard marly = new EntityGuard();
-        marly.title = "Marly";
+        marly.set_title("Marly");
         entities.add(marly);
         EntityPlayer maria = new EntityPlayer();
-        maria.title = "Maria";
+        maria.set_title("Maria");
         entities.add(maria);
         EntityPlayer ksenia = new EntityPlayer();
-        ksenia.title = "Ksenia";
+        ksenia.set_title("Ksenia");
         entities.add(ksenia);
     }
 
@@ -29,7 +29,7 @@ public class World {
         Iterator<Entity> iterator = entities.iterator();
         while (iterator.hasNext()) {
             Entity object = iterator.next();
-            System.out.println("--- update object " + object.title);
+            System.out.println("--- update object " + object.get_title());
 
 //      Передвинуть обьект ближе к ближайшему EntityPlayer
             if (!(object instanceof EntityPlayer)) {
@@ -37,11 +37,11 @@ public class World {
                 LinkedList<EntityPlayer> players = getPlayersNearEntity(object, 10);
                 if(players.size()>0) {
                     EntityPlayer nearestPlayer = getNearestPlayer(object, players);
-                    System.out.println("NearestPlayer for " + object.title + " is " + nearestPlayer.title);
-                    object.move_to(nearestPlayer.xPos, nearestPlayer.yPos);
+                    System.out.println("NearestPlayer for " + object.get_title() + " is " + nearestPlayer.get_title());
+                    object.move_to(nearestPlayer.get_x(), nearestPlayer.get_y());
                 } else
                 {
-                    System.out.println(object.title + " has no players in range 10");
+                    System.out.println(object.get_title() + " has no players in range 10");
                 }
 
             }
@@ -58,13 +58,13 @@ public class World {
                 }
                 else {
                         EntityPlayer nearestPlayer = getNearestPlayer(object, players);
-                        System.out.println(object.title + " can attack " + nearestPlayer.title);
+                        System.out.println(object.get_title() + " can attack " + nearestPlayer.get_title());
 
-                        LinkedList<EntityGuard> guards = getGuardiansInRegion(object.xPos, object.yPos, 2);
+                        LinkedList<EntityGuard> guards = getGuardiansInRegion(object.get_x(), object.get_y(), 2);
                         nearestPlayer.set_guards(guards);
 
                         if (nearestPlayer.attackEntityFrom(object, 1) == true)
-                            System.out.println("Oh " + nearestPlayer.title + " die");
+                            System.out.println("Oh " + nearestPlayer.get_title() + " die");
                 }
             }
         }
@@ -80,7 +80,7 @@ public class World {
     }
 
     public LinkedList<Entity> getEntitiesNearEntity(Entity entity, double range) {
-        return getEntitiesInRegion(entity.xPos, entity.yPos, range);
+        return getEntitiesInRegion(entity.get_x(), entity.get_y(), range);
     }
 
     public LinkedList<EntityPlayer> getPlayersNearEntity(Entity entity, double range) {
@@ -119,7 +119,7 @@ public class World {
         Iterator<Entity> iterator = entities.iterator();
         while (iterator.hasNext()) {
             Entity next = iterator.next();
-            double distance = calculateDistanceBetweenPoints(x, y, next.xPos, next.yPos);
+            double distance = calculateDistanceBetweenPoints(x, y, next.get_x(), next.get_y());
             if (distance < range)
                 in_range.add(next);
         }
@@ -133,8 +133,8 @@ public class World {
         EntityPlayer nearest = iterator.next(); // fisrt object
         while (iterator.hasNext()) {
             EntityPlayer next = iterator.next();
-            double distance1 = calculateDistanceBetweenPoints(entity.xPos, entity.yPos, next.xPos, next.yPos);
-            double distance2 = calculateDistanceBetweenPoints(entity.xPos, entity.yPos, nearest.xPos, nearest.yPos);
+            double distance1 = calculateDistanceBetweenPoints(entity.get_x(), entity.get_y(), next.get_x(), next.get_y());
+            double distance2 = calculateDistanceBetweenPoints(entity.get_x(), entity.get_y(), nearest.get_x(), nearest.get_y());
             if (distance1 < distance2)
                 nearest = next;
         }

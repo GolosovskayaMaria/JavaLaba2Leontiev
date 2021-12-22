@@ -3,10 +3,27 @@ package com.mg.game;
 abstract class Entity {
     public static final double MAX_HEALTH = 5;
     public static final double MAX_POSITION = 10;
-    String title;
-    int xPos = 0;
-    int yPos = 0;
+    private String title;
+    private int xPos = 0;
+    private int yPos = 0;
     int age = 0; // количество пережитых обновлений
+
+    String get_title() {
+        return title;
+    };
+
+    void set_title(String Title){
+        title = Title;
+    }
+
+    int get_x(){
+        return xPos;
+    }
+
+    int get_y(){
+        return yPos;
+    }
+
     void move_to(int x, int y) { // x,y задают куда двигаться
         if (xPos > x) xPos = xPos - 1;
         if (xPos < x) xPos = xPos + 1;

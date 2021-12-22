@@ -20,7 +20,7 @@ public class EntityPlayer   extends Entity {
             EntityGuard firstGuard = iterG.next();
             // а вдруг рядом есть гвард? атаковать его вмнесто игрока
             if (firstGuard.attackEntityFrom(entity, damage) == true)
-                System.out.println("Oh " + firstGuard.title + " die");
+                System.out.println("Oh " + firstGuard.get_title() + " die");
             return false;
         }
         else {
